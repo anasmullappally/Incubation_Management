@@ -6,13 +6,18 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-jwt": "^7.7.5",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "mongodb": "^4.7.0",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.18"
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.18",
+    "react-jwt": "^1.1.6"
   }
 }

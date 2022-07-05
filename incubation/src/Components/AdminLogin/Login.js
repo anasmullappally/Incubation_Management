@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
-import { serverURL } from '../../Constants/constants'
+import { adminServer } from '../../Constants/constants'
 
 
 function Login() {
@@ -23,6 +23,7 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+
 
     const details = {
         email,
@@ -33,12 +34,12 @@ function Login() {
         if (!email || !password) {
             setError('Enter All Details')
         } else {
-            axios.post(`${serverURL}/login`, details).then((response) => {
-                // console.log('login successs');
+            axios.post(`${adminServer}/login`, details).then((response) => {
                 console.log(response);
-                localStorage.setItem("userToken", JSON.stringify(response.data.usertoken))
-            
-                navigate('/home')
+               
+                
+                localStorage.setItem("adminToken", JSON.stringify(response.data.adminToken))
+                navigate('/adminHome')
             }).catch((error) => {
                 console.log(error);
                 if (error.response.data.err) {
@@ -64,7 +65,7 @@ function Login() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Admin
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
                         {error && <h5 style={{ color: 'red' }}>{error}</h5>}
@@ -106,11 +107,7 @@ function Login() {
                         </Button>
                         <Grid container>
 
-                            <Grid item>
-                                <Link href="/signUp" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
+
                         </Grid>
                     </Box>
                 </Box>

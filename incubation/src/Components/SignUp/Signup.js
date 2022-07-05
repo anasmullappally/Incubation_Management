@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,9 +13,43 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import axios from 'axios'
+import { serverURL } from '../../Constants/constants'
 
 function Signup() {
     const theme = createTheme();
+    const [userName, setUserName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [error, setError] = useState('')
+
+    const details = {
+        userName,
+        email,
+        password
+    }
+
+    const signup = (e) => {
+        e.preventDefault()
+        if (!userName || !email || !password || !confirmPassword) {
+            setError('Enter All Details')
+        } else if (password.length < 5) {
+            setError('Enter Minimum 5 chararcters')
+        } else if (password !== confirmPassword) {
+            setError('Password Must be Equal')
+        } else {
+            console.log(details);
+            axios.post(`${serverURL}/signup`, details).then((reponse) => {
+                console.log('signup success');
+            }).catch((error) => {
+                console.log(error);
+                if (error.response.data.err) {
+                    setError(error.response.data.err)
+                }
+            })
+        }
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -35,15 +69,19 @@ function Signup() {
                         Sign Up
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
-                    <TextField
+                        {error && <h5 style={{ color: 'red' }}>{error}</h5>}
+                        <TextField
                             margin="normal"
                             required
                             fullWidth
                             id="name"
                             label="Name"
                             name="name"
-                            autoComplete="name"
+                            // autoComplete="name"
                             autoFocus
+                            onChange={(e) => {
+                                setUserName(e.target.value)
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -54,6 +92,9 @@ function Signup() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -64,8 +105,11 @@ function Signup() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
                         />
-                         <TextField
+                        <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -74,6 +118,9 @@ function Signup() {
                             type="password"
                             id="confirmPassword"
                             autoComplete="repeate-password"
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value)
+                            }}
                         />
 
                         <Button
@@ -81,6 +128,7 @@ function Signup() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={signup}
                         >
                             Sign Up
                         </Button>
