@@ -39,7 +39,7 @@ function Login() {
                
                 
                 localStorage.setItem("adminToken", JSON.stringify(response.data.adminToken))
-                navigate('/adminHome')
+                navigate('/admin/applicationList')
             }).catch((error) => {
                 console.log(error);
                 if (error.response.data.err) {

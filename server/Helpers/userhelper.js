@@ -49,9 +49,9 @@ module.exports = {
 
         })
     },
-    formSubmission: (formDetails ,userId) => {
-        formDetails.userId =userId
-        formDetails.status='pending'
+    formSubmission: (formDetails, userId) => {
+        formDetails.userId = userId
+        formDetails.status = 'new'
         return new Promise((resolve) => {
             let response = {}
             db.get().collection(collection.FORM_COLLECTION).insertOne(formDetails).then((details) => {
