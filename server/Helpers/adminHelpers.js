@@ -36,40 +36,18 @@ module.exports = {
             resolve(results)
         })
     },
-    applicationStatusToPending : (appId)=>{
+    changeFormStatus : ({id ,status})=>{
         return new Promise(async(resolve,reject)=>{
             await db.get().collection(collection.FORM_COLLECTION).updateOne(
-                {_id:ObjectId(appId)},
-                {$set:{'status':'pending'}}
-            ).then((response)=>{
-                console.log((response));
-                resolve()
-            })
-        })
-    },
-    applicationStatusToCancel : (appId)=>{
-        return new Promise(async(resolve,reject)=>{
-            await db.get().collection(collection.FORM_COLLECTION).updateOne(
-                {_id:ObjectId(appId)},
-                {$set:{'status':'cancel'}}
-            ).then((response)=>{
-                console.log((response));
-                resolve()
-            })
-        })
-    },
-    applicationStatusToApprove : (appId)=>{
-        return new Promise(async(resolve,reject)=>{
-            await db.get().collection(collection.FORM_COLLECTION).updateOne(
-                {_id:ObjectId(appId)},
-                {$set:{'status':'approved'}}
+                {_id:ObjectId(id)},
+                {$set:{'status':status}}
             ).then((response)=>{
                 console.log((response));
                 resolve()
             })
         })
     }
-
+    
 
 
 }

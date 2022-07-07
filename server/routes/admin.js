@@ -41,22 +41,35 @@ router.get('/applictions/list', (req, res) => {
   })
 })
 
-router.get('/user/change/:id', (req, res) => {
-  adminHelpers.applicationStatusToPending(req.params.id).then(() => {
-    res.status(200).json({ pending: 'success' })
-  })
-})
-router.get('/user/approve/:id', (req, res) => {
-  adminHelpers.applicationStatusToApprove(req.params.id).then(() => {
+router.get('/user/change', (req, res) => {
+  console.table(req.query)
+  adminHelpers.changeFormStatus(req.query).then(() => {
     res.status(200).json({ success: 'success' })
   })
 })
-router.get('/user/cancel/:id', (req, res) => {
-  adminHelpers.applicationStatusToCancel(req.params.id).then(() => {
-    res.status(200).json({ cancel: 'success' })
+router.get('/allApllications', (req, res) => {
+  adminHelpers.applicationList().then((formDetails) => {
+    let response = {}
+    let newApplication = []
+    let pendingApplication = []
+    let confirmedApplication = []
+    for (i of formDetails) {
+      if (i.status === 'pending') {
+        pendingApplication.push(i)
+      } else if (i.status === 'approved') {
+        confirmedApplication.push(i)
+      } else if (i.status === 'new') {
+        newApplication.push(i)
+      }
+    }
+    response.all = formDetails
+    response.pending = pendingApplication
+    response.confirmed = confirmedApplication
+    response.new = newApplication
+    res.status(200).json(response)
+    console.log(response);
   })
 })
-
 
 
 module.exports = router;

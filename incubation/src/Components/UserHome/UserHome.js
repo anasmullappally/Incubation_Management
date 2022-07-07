@@ -77,7 +77,7 @@ function UserHome() {
 
             axios.post(`${serverURL}/formSubmit/${user.id}`, data, config, token).then((response) => {
                 console.log(response);
-                navigate('/home')
+    navigate('/processing')
             }).catch((err) => {
                 console.log('error')
             })

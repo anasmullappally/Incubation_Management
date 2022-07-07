@@ -21,12 +21,13 @@ function Applicationlist() {
     const navigate = useNavigate()
     const [newApplicationList, setNewApplicationList] = useState([])
     const [pendingApplication, setPendingApplication] = useState([])
+    const [status,setstatus]=useState(false)
     const { viewApplications, setViewApplications } = useContext(ApplicationContext)
     let list, newApplicants, index = 1, pendingList
 
     useEffect(() => {
         displyAll()
-    }, [newApplicationList])
+    }, [status])
 
     async function displyAll() {
         let response = await axios.get(`${adminServer}/applictions/list`)
@@ -43,34 +44,22 @@ function Applicationlist() {
         setPendingApplication(pendingList)
         // console.log(newApplicants);
     }
-    
+
     // Modal
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [form, setForm] = useState()
-    
 
-    const makePending = async (id) => {
-        // console.log(id);
-        const response = await axios.get(`${adminServer}/user/change/${id}`)
-        // console.log(response);
-        setNewApplicationList(newApplicants)
-    }
-    const makeApprove = async (id)=>{
-        await axios.get(`${adminServer}/user/approve/${id}`)
-    }
-    const makeCancel = async (id)=>{
-        await axios.get(`${adminServer}/user/cancel/${id}`)
+
+    const changeStatus = async (id, status) => {
+        await axios.get(`${adminServer}/user/change?id=${id}&status=${status}`)
     }
     return (
         <div className='main'>
             {/* modal */}
 
-
-
-            
-            <Modal   show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Application For Incubation</Modal.Title>
                 </Modal.Header>
@@ -87,7 +76,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="First name"
-                       
+
                                     />
                                 </div>
                                 <div className="mb-3 col-6">
@@ -98,7 +87,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="Enter email"
-                                    
+
                                     />
                                 </div>
                             </div>
@@ -111,7 +100,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="First name"
-                                   
+
                                     />
                                 </div>
 
@@ -123,7 +112,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="Enter email"
-                                    
+
                                     />
                                 </div>
                             </div>
@@ -136,7 +125,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="First name"
-                                   
+
                                     />
                                 </div>
 
@@ -148,7 +137,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="Enter email"
-                                   
+
                                     />
                                 </div>
                             </div>
@@ -161,7 +150,7 @@ function Applicationlist() {
                                         type="text"
                                         className="form-control"
                                         placeholder="First name"
-                                  
+
                                     />
                                 </div>
 
@@ -175,7 +164,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                              
+
                                 />
                             </div>
                             <div className="mb-3 ">
@@ -186,7 +175,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                              
+
                                 />
                             </div>
                             <div className="mb-3 ">
@@ -197,7 +186,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                              
+
 
                                 />
                             </div>
@@ -209,7 +198,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                              
+
 
                                 />
                             </div>
@@ -221,7 +210,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                          
+
 
                                 />
                             </div>
@@ -233,7 +222,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                               
+
 
                                 />
                             </div>
@@ -245,7 +234,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                       
+
 
                                 />
                             </div>
@@ -257,7 +246,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                               
+
                                 />
                             </div>
                             <div className="mb-3 ">
@@ -268,7 +257,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                            
+
                                 />
                             </div>
                             <label>Question : Type of Incubation</label>
@@ -278,7 +267,7 @@ function Applicationlist() {
                                 className="form-control"
                                 placeholder="Enter email"
                                 readOnly
-                            
+
 
                             />
                             <div>
@@ -292,7 +281,7 @@ function Applicationlist() {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter email"
-                               
+
                                 />
                             </div>
 
@@ -301,7 +290,8 @@ function Applicationlist() {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary"
+                        onClick={handleClose}>
                         Close
                     </Button>
 
@@ -331,17 +321,22 @@ function Applicationlist() {
                                 <TableCell >{data.companyname}</TableCell>
                                 <TableCell >{data.address},{data.city},{data.state}</TableCell>
                                 <TableCell >
-                                    <Button variant="outlined" color="success" onClick={() => {
-                                        setForm(data)
-                                        handleShow()
-                                    }}>
+                                    <Button variant="outlined" color="success"
+                                        onClick={() => {
+                                            setstatus(true)
+                                            setForm(data)
+                                            handleShow()
+                                        }}>
                                         open
                                     </Button>
                                 </TableCell>
                                 <TableCell >
-                                    <Button variant="outlined" color="error" onClick={() => {
-                                        makePending(data._id)
-                                    }}>
+                                    <Button variant="outlined" color="error"
+                                        onClick={() => {
+                                            setstatus(true)
+                                            let status = 'pending'
+                                            changeStatus(data._id, status)
+                                        }}>
                                         Pending
                                     </Button>
                                 </TableCell>
@@ -375,6 +370,7 @@ function Applicationlist() {
                                 <TableCell >
                                     <Button variant="contained" color="success"
                                         onClick={() => {
+
                                             setForm(data)
                                             handleShow()
                                         }}>
@@ -383,16 +379,22 @@ function Applicationlist() {
                                     </Button>
                                 </TableCell>
                                 <TableCell >
-                                    <Button variant="outlined" onClick={() => {
-                                        makeApprove(data._id)
-                                    }}>
+                                    <Button variant="outlined"
+                                        onClick={() => {
+                                            setstatus(true)
+                                            let status = 'approved'
+                                            changeStatus(data._id, status)
+                                        }}>
                                         Approve
                                     </Button>
                                 </TableCell>
                                 <TableCell >
-                                    <Button style={{ backgroundColor: '#b8b8b8', color: 'red' }} onClick={() => {
-                                        makeCancel(data._id)
-                                    }}>
+                                    <Button style={{ backgroundColor: '#b8b8b8', color: 'red' }}
+                                        onClick={() => {
+                                            setstatus(true)
+                                            let status = 'declined'
+                                            changeStatus(data._id, status)
+                                        }}>
                                         decline
                                     </Button>
                                 </TableCell>

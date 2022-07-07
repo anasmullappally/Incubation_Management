@@ -11,7 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import './SideBar.css'
 import {useNavigate} from 'react-router-dom'
 
-const sidenav = ['applicationlist','recordtrack','bookingslots','logout']
+const sidenav = ['admin/applicationlist','admin/recordtrack','admin/bookingslots','logout']
 
 
 function Siderbar() {
@@ -20,15 +20,15 @@ function Siderbar() {
     const navigate = useNavigate();
 
     const loggingout = () =>{
-        localStorage.removeItem("adminData")
+        localStorage.removeItem("adminToken")
         setlogout(true)
     }
 
 
     useEffect(() => {
-        let admin  = localStorage.getItem("adminData")
+        let admin  = localStorage.getItem("adminToken")
         if (!admin) {
-            navigate('/adminlogin')
+            navigate('/admin')
         }
       }, [logout])
 
@@ -43,10 +43,10 @@ function Siderbar() {
                             minHeight: 48,
                             px: 2.5,
                         }} 
-                        // onClick={()=>{
-                        //     text == 'Logout' ? loggingout() :
-                        //     navigate(`/${sidenav[index]}`)
-                        // }}
+                        onClick={()=>{
+                            text == 'Logout' ? loggingout() :
+                            navigate(`/${sidenav[index]}`)
+                        }}
                     >
                         <ListItemIcon
                             sx={{

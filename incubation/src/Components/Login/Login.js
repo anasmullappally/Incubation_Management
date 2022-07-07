@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,7 +37,7 @@ function Login() {
                 // console.log('login successs');
                 console.log(response);
                 localStorage.setItem("userToken", JSON.stringify(response.data.usertoken))
-            
+
                 navigate('/home')
             }).catch((error) => {
                 console.log(error);
@@ -46,8 +46,16 @@ function Login() {
                 }
             })
         }
-
     }
+    useEffect(() => {
+        const token = localStorage.getItem('userToken')
+        if (token) {
+            navigate('/home')
+        } else {
+            navigate('/')
+        }
+    }, [])
+
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
