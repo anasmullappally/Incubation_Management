@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var adminHelpers = require('../Helpers/adminHelpers')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { response } = require('express');
 
 
 
@@ -10,8 +11,6 @@ router.post('/login', (req, res) => {
   try {
     adminHelpers.doLogin(details).then((response) => {
       if (response.loggedIn) {
-
-
         const token = jwt.sign(
           {
             id: response.admin._id,
@@ -70,6 +69,29 @@ router.get('/allApllications', (req, res) => {
     console.log(response);
   })
 })
+
+router.get('/applictions/lists', (req, res) => {
+  adminHelpers.slotAppllication().then((response) => {
+    res.status(200).json({ data: response })
+  }).catch(() => {
+    res.status(400).json({ data: 'error' })
+  })
+})
+router.get('/getslots', (req, res) => {
+  adminHelpers.getAllSlots().then((solts) => {
+    res.status(200).json(solts)
+  })
+})
+router.get('/update', (req, res) => {
+  req.query.slotId = parseInt(req.query.slotId)
+  adminHelpers.updateSlots(req.query).then((response) => {
+    res.status(200).json({})
+  }).catch(() => {
+    res.status(400).json({ data: 'error' })
+  })
+
+})
+
 
 
 module.exports = router;

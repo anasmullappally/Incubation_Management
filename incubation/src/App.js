@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AdminApplication from './Pages/AdminApplication';
 import AdminLoginPage from './Pages/AdminLoginPage';
 import AdminRecordings from './Pages/AdminRecordings';
+import AdminSlotBooking from './Pages/AdminSlotBooking';
 import LoginPage from "./Pages/LoginPage";
 import Processing from './Pages/Processing';
 import RegisterPage from './Pages/RegisterPage';
@@ -22,6 +23,7 @@ function App() {
             <Route path="/admin" element={<AdminLoginPage />} />
             <Route path="/admin/applicationList" element={<AdminApplication />} />
             <Route path="/admin/recordtrack" element={<AdminRecordings />} />
+            <Route path="/admin/bookingslots" element={ <AdminSlotBooking/>} />
 
 
 
