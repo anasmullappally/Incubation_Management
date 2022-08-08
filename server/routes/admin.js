@@ -66,7 +66,7 @@ router.get('/allApllications', (req, res) => {
     response.confirmed = confirmedApplication
     response.new = newApplication
     res.status(200).json(response)
-    console.log(response);
+  
   })
 })
 

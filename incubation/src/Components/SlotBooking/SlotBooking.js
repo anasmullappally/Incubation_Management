@@ -6,8 +6,6 @@ import { adminServer } from '../../Constants/constants'
 
 function SlotBooking() {
     let A, B, C, D, E
-
-
     const [slotA, setSlotA] = useState([])
     const [slotB, setSlotB] = useState([])
     const [slotC, setSlotC] = useState([])
@@ -18,7 +16,6 @@ function SlotBooking() {
 
     const [slotId, setSlotId] = useState()
     const [slotSection, setSlotSection] = useState()
-
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -72,7 +69,7 @@ function SlotBooking() {
     }
 
     return (
-        <div>
+        <div className='container'>
             <div className="d-flex sectionA ms-lg-5 mx-auto">
                 {slotA &&
                     slotA.map((item) => {

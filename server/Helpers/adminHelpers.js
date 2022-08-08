@@ -42,7 +42,6 @@ module.exports = {
                 { _id: ObjectId(id) },
                 { $set: { 'status': status } }
             ).then((response) => {
-                console.log((response));
                 resolve()
             })
         })
@@ -61,13 +60,11 @@ module.exports = {
         })
     },
     updateSlots: ({ applicantId, slotId, slotSection }) => {
-        console.log(applicantId);
+        
         return new Promise(async (resolve) => {
             await db.get().collection(collection.FORM_COLLECTION).updateOne(
                 { _id: ObjectId(applicantId) }, { $set: { isBooked: true, status: 'selected' } }
-            ).then((response) => {
-                console.log(response);
-            })
+            )
             await db.get().collection(collection.SLOT_COLLECTION).updateOne(
                 { slot: slotId, section: slotSection },
                 {

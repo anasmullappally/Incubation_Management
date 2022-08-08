@@ -1,46 +1,4 @@
-/* .main{
-    overflow-x: scroll;
-}
-.main::-webkit-scrollbar{
-    display: none;
-}
-.main2{
-    width: 1280px;
-}
-.hrline{
-    margin-top: 2%;
-    margin-bottom: 2%;
-    height: 2px;
-    background-color: grey;
-}
-.boxdown1{
-    margin: 2%;
-    width: 23%;
-    height: fit-content;
-    
-}
-.boxdown2{
-    margin: 2%;
-    width: 23%;
-    height: fit-content;
-}
-.boxdown3{
-    margin: 2%;
-    width: 23%;
-    height: fit-content;
-}
-.boxdown4{
-    margin: 2%;
-    width: 23%;
-    height: fit-content;
-}
-.divider{
-    width: 2px;
-    background-color: grey;
-}
-.paper:hover{
-    background-color: #b2ff94;
-} */
+
 .slot {
     /* height: 30px; */
     /* width: 30px; */
@@ -78,7 +36,7 @@
     /* width: 40px;
     height: 40px; */
     padding: 2rem;
-    background-color: bisque;
+    background-color: rgb(83, 104, 142);
     margin: 1rem;
 
 

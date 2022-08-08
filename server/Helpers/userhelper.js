@@ -5,12 +5,11 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
     dosignUp: (details) => {
-        console.log(details);
+       
         return new Promise(async (resolve) => {
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: details.email })
             if (user) {
-                console.log('user exists');
                 response.alreadyExist = true
                 resolve(response)
             } else {
@@ -20,8 +19,6 @@ module.exports = {
                     email: details.email,
                     password: password
                 }).then((response) => {
-                    console.log(response);
-                    console.log(1111);
                     resolve(response)
                 })
             }

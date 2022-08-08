@@ -23,7 +23,7 @@ function App() {
             <Route path="/admin" element={<AdminLoginPage />} />
             <Route path="/admin/applicationList" element={<AdminApplication />} />
             <Route path="/admin/recordtrack" element={<AdminRecordings />} />
-            <Route path="/admin/bookingslots" element={ <AdminSlotBooking/>} />
+            <Route path="/admin/bookingslots" element={<AdminSlotBooking />} />
 
 
 

@@ -45,9 +45,6 @@ router.post('/login', (req, res) => {
           },
           'secret11'
         )
-        // console.log(response);
-        // console.log(15161);
-        // console.log(token);
         res.status(200).json({ response ,usertoken:token})
       } else if (response.inCorrectPassword) {
         res.status(400).json({ err: 'Incorrect Password' })
@@ -64,8 +61,6 @@ router.post('/formSubmit/:id', (req, res) => {
   try {
 
     upload(req, res, (err) => {
-      // console.table(JSON.parse(req.body.data));
-      // console.log(req.params.id);
       let userId=req.params.id
       let formData = JSON.parse(req.body.data)
       console.table(formData)
@@ -77,7 +72,7 @@ router.post('/formSubmit/:id', (req, res) => {
             throw error
 
           } else {
-            console.log('successfully mobved')
+            // console.log('successfully mobved')
           }
         })
         res.status(200).json({ success: 'form submitted successfully' })
